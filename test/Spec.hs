@@ -10,66 +10,73 @@ import Data.Sort
 import Sorting
 
 main :: IO ()
-main = defaultTestFunc
+main = run
 
-defaultTestFunc = do
-                    runHspecUnitTests
-                    time
-
-runHspecUnitTests = hspec $ do
+run = do
+        g <- getStdGen
+        let three = (take 3 (randomRs (1,100) g))::[Integer]
+        let ten = (take 10 (randomRs (1,100) g))::[Integer]
+        let hundred = (take 100 (randomRs (1,100) g))::[Integer]
+        let thousand = (take 1000 (randomRs (1,100) g))::[Integer]
+        let tenthousand = (take 10000 (randomRs (1,100) g))::[Integer]
+        runTests three ten hundred thousand tenthousand
+                    -- time
+runTests :: [Integer] -> [Integer] -> [Integer] -> [Integer] -> [Integer] -> IO ()
+runTests three ten hundred thousand tenthousand = hspec $ do
   describe "quicksort tests" $ do
     it "sort list size 3" $ do
-      testsort 3 quicksort
+      quicksort three `shouldBe` sort three
     it "sort list size 10" $ do
-      testsort 10 quicksort
+      quicksort ten `shouldBe` sort ten
     it "sort list size 100" $ do
-      testsort 100 quicksort
+      quicksort hundred `shouldBe` sort hundred
     it "sort list size 1000" $ do
-      testsort 1000 quicksort
+      quicksort thousand `shouldBe` sort thousand
     it "sort list size 10000" $ do
-      testsort 10000 quicksort
+      quicksort tenthousand `shouldBe` sort tenthousand
 
   describe "parallel quicksort tests" $ do
     it "sort list size 3" $ do
-      testsort 3 parQuicksort
+      parQuicksort three `shouldBe` sort three
     it "sort list size 10" $ do
-      testsort 10 parQuicksort
+      parQuicksort ten `shouldBe` sort ten
     it "sort list size 100" $ do
-      testsort 100 parQuicksort
+      parQuicksort hundred `shouldBe` sort hundred
     it "sort list size 1000" $ do
-      testsort 1000 parQuicksort
+      parQuicksort thousand `shouldBe` sort thousand
     it "sort list size 10000" $ do
-      testsort 10000 parQuicksort
+      parQuicksort tenthousand `shouldBe` sort tenthousand
 
   describe "mergesort tests" $ do
     it "sort list size 3" $ do
-      testsort 3 mergeSort
+      mergeSort three `shouldBe` sort three
     it "sort list size 10" $ do
-      testsort 10 mergeSort
+      mergeSort ten `shouldBe` sort ten
     it "sort list size 100" $ do
-      testsort 100 mergeSort
+      mergeSort hundred `shouldBe` sort hundred
     it "sort list size 1000" $ do
-      testsort 1000 mergeSort
+      mergeSort thousand `shouldBe` sort thousand
     it "sort list size 10000" $ do
-      testsort 10000 mergeSort
+      mergeSort tenthousand `shouldBe` sort tenthousand
 
   describe "parallel mergesort tests" $ do
     it "sort list size 3" $ do
-      testsort 3 parmergeSort
+      parmergeSort three `shouldBe` sort three
     it "sort list size 10" $ do
-      testsort 10 parmergeSort
+      parmergeSort ten `shouldBe` sort ten
     it "sort list size 100" $ do
-      testsort 100 parmergeSort
+      parmergeSort hundred `shouldBe` sort hundred
     it "sort list size 1000" $ do
-      testsort 1000 parmergeSort
+      parmergeSort thousand `shouldBe` sort thousand
     it "sort list size 10000" $ do
-      testsort 10000 parmergeSort
+      parmergeSort tenthousand `shouldBe` sort tenthousand
 
 testsort :: Int -> ([Integer] -> [Integer]) -> IO ()
 testsort n f = do
                     g <- getStdGen
                     let input = (take n (randomRs (0,100) g))::[Integer]
                     f input `shouldBe` (sort input)
+
 
 time :: IO ()
 time = do

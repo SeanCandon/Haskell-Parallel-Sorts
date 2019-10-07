@@ -27,8 +27,6 @@ parQuicksort2 n (x:xs) = par losort (pseq hisort (losort ++ x : hisort))
                       losort = parQuicksort2 (n-1) [y | y <- xs, y < x]
                       hisort = parQuicksort2 (n-1) [y | y <- xs, y >= x]
 
-
-
 mergeSort :: [Integer] -> [Integer]
 mergeSort [] = []
 mergeSort [a] = [a]
@@ -52,16 +50,6 @@ parmergeSort a =
   par firstFew (pseq lastFew (merge (parmergeSort firstFew) (parmergeSort lastFew)))
     where firstFew = take ((length a) `div` 2) a
           lastFew = drop ((length a) `div` 2) a
-
-fib :: Integer -> Integer
-fib n | n < 2 = 1
-fib n = fib (n-1) + fib (n-2)
-
-fibpar :: Integer -> Integer
-fibpar n | n < 2 = 1
-fibpar n = par nf1 (pseq nf2 (nf1 + nf2))
-        where nf1 = fibpar (n-1)
-              nf2 = fibpar (n-2)
 
 timed :: (NFData a, Show a) => a -> IO ()
 timed f = do
