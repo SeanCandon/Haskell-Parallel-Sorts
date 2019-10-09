@@ -6,6 +6,7 @@ import Test.Hspec
 
 import System.Random
 import Data.Sort
+import Control.Parallel.Strategies
 
 import Sorting
 
@@ -26,48 +27,48 @@ runTests three ten hundred thousand tenthousand = hspec $ do
     it "quicksort" $ do
       quicksort three `shouldBe` sort three
     it "parallel quicksort" $ do
-      parQuicksort three `shouldBe` sort three
+      runEval (parQuicksort3 three) `shouldBe` sort three
     it "mergesort" $ do
       mergeSort three `shouldBe` sort three
     it "parallel mergesort" $ do
-      parmergeSort three `shouldBe` sort three
+      runEval (parmergeSort3 three) `shouldBe` sort three
 
   describe "sort list size 10" $ do
     it "quicksort" $ do
       quicksort ten `shouldBe` sort ten
     it "parallel quicksort" $ do
-      parQuicksort ten `shouldBe` sort ten
+      runEval (parQuicksort3 ten) `shouldBe` sort ten
     it "mergesort" $ do
       mergeSort ten `shouldBe` sort ten
     it "parallel mergesort" $ do
-      parmergeSort ten `shouldBe` sort ten
+      runEval (parmergeSort3 ten) `shouldBe` sort ten
 
   describe "sort list size 100" $ do
     it "quicksort" $ do
       quicksort hundred `shouldBe` sort hundred
     it "parallel quicksort" $ do
-      parQuicksort hundred `shouldBe` sort hundred
+      runEval (parQuicksort3 hundred) `shouldBe` sort hundred
     it "mergesort" $ do
       mergeSort hundred `shouldBe` sort hundred
     it "parallel mergesort" $ do
-      parmergeSort hundred `shouldBe` sort hundred
+      runEval (parmergeSort3 hundred) `shouldBe` sort hundred
 
   describe "sort list size 1000" $ do
     it "quicksort" $ do
       quicksort thousand `shouldBe` sort thousand
     it "parallel quicksort" $ do
-      parQuicksort thousand `shouldBe` sort thousand
+      runEval (parQuicksort3 thousand) `shouldBe` sort thousand
     it "mergesort" $ do
       mergeSort thousand `shouldBe` sort thousand
     it "parallel mergesort" $ do
-      parmergeSort thousand `shouldBe` sort thousand
+      runEval (parmergeSort3 thousand) `shouldBe` sort thousand
 
   describe "sort list size 10000" $ do
     it "quicksort" $ do
       quicksort tenthousand `shouldBe` sort tenthousand
     it "parallel quicksort" $ do
-      parQuicksort tenthousand `shouldBe` sort tenthousand
+      runEval (parQuicksort3 tenthousand) `shouldBe` sort tenthousand
     it "mergesort" $ do
       mergeSort tenthousand `shouldBe` sort tenthousand
     it "parallel mergesort" $ do
-      parmergeSort tenthousand `shouldBe` sort tenthousand
+      runEval (parmergeSort3 tenthousand) `shouldBe` sort tenthousand

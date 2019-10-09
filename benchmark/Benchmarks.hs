@@ -33,15 +33,15 @@ runBenches three ten hundred thousand tenthousand =
                       ],
                       bgroup "Parallel Quicksort"
                       [ bench "3"
-                        (whnf parQuicksort three),
+                        (whnf parQuicksort3 three),
                         bench "10"
-                        (whnf parQuicksort ten),
+                        (whnf parQuicksort3 ten),
                         bench "100"
-                        (whnf parQuicksort hundred),
+                        (whnf parQuicksort3 hundred),
                         bench "1000"
-                        (whnf parQuicksort thousand),
+                        (whnf parQuicksort3 thousand),
                         bench "10000"
-                        (whnf parQuicksort tenthousand)
+                        (whnf parQuicksort3 tenthousand)
                       ],
                       bgroup "Mergesort"
                       [ bench "3"
@@ -55,16 +55,16 @@ runBenches three ten hundred thousand tenthousand =
                         bench "10000"
                         (whnf mergeSort tenthousand)
                       ],
-                      bgroup "Parallel Mergsort"
+                      bgroup "Parallel Mergesort"
                       [ bench "3"
-                        (whnf parmergeSort three),
+                        (whnf parmergeSort3 three),
                         bench "10"
-                        (whnf parmergeSort ten),
+                        (whnf parmergeSort3 ten),
                         bench "100"
-                        (whnf parmergeSort hundred),
+                        (whnf parmergeSort3 hundred),
                         bench "1000"
-                        (whnf parmergeSort thousand),
+                        (whnf parmergeSort3 thousand),
                         bench "10000"
-                        (whnf parmergeSort tenthousand)
+                        (whnf parmergeSort3 tenthousand)
                       ]
                     ]

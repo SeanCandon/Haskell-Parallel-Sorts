@@ -83,6 +83,7 @@ tests:
     - hspec == 2.*
     - random
     - sort
+    - parallel
 
 benchmarks:
   benchmarks:
