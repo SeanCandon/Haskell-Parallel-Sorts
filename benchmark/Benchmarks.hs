@@ -15,10 +15,12 @@ run = do
         hundred <- sequence $ replicate 100 $ randomRIO (1,100::Integer)
         thousand <- sequence $ replicate 1000 $ randomRIO (1,100::Integer)
         tenthousand <- sequence $ replicate 10000 $ randomRIO (1,100::Integer)
-        defaultMain $ runBenches three ten hundred thousand tenthousand
+        hunthousand <- sequence $ replicate 100000 $ randomRIO (1,100::Integer)
+        million <- sequence $ replicate 1000000 $ randomRIO (1,100::Integer)
+        defaultMain $ runBenches three ten hundred thousand tenthousand hunthousand million
 
-runBenches :: [Integer] -> [Integer] -> [Integer] -> [Integer] -> [Integer]-> [Benchmark]
-runBenches three ten hundred thousand tenthousand =
+runBenches :: [Integer] -> [Integer] -> [Integer] -> [Integer] -> [Integer] -> [Integer] -> [Integer] -> [Benchmark]
+runBenches three ten hundred thousand tenthousand hunthousand million =
                     [ bgroup "Quicksort"
                       [ bench "3"
                         (whnf quicksort three),
@@ -29,19 +31,27 @@ runBenches three ten hundred thousand tenthousand =
                         bench "1000"
                         (whnf quicksort thousand),
                         bench "10000"
-                        (whnf quicksort tenthousand)
+                        (whnf quicksort tenthousand),
+                        bench "100000"
+                        (whnf quicksort hunthousand),
+                        bench "1000000"
+                        (whnf quicksort million)
                       ],
                       bgroup "Parallel Quicksort"
                       [ bench "3"
-                        (whnf parQuicksort3 three),
+                        (whnf parQuicksort three),
                         bench "10"
-                        (whnf parQuicksort3 ten),
+                        (whnf parQuicksort ten),
                         bench "100"
-                        (whnf parQuicksort3 hundred),
+                        (whnf parQuicksort hundred),
                         bench "1000"
-                        (whnf parQuicksort3 thousand),
+                        (whnf parQuicksort thousand),
                         bench "10000"
-                        (whnf parQuicksort3 tenthousand)
+                        (whnf parQuicksort tenthousand),
+                        bench "100000"
+                        (whnf parQuicksort hunthousand),
+                        bench "1000000"
+                        (whnf parQuicksort million)
                       ],
                       bgroup "Mergesort"
                       [ bench "3"
@@ -53,18 +63,26 @@ runBenches three ten hundred thousand tenthousand =
                         bench "1000"
                         (whnf mergeSort thousand),
                         bench "10000"
-                        (whnf mergeSort tenthousand)
+                        (whnf mergeSort tenthousand),
+                        bench "100000"
+                        (whnf mergeSort hunthousand),
+                        bench "1000000"
+                        (whnf mergeSort million)
                       ],
                       bgroup "Parallel Mergesort"
                       [ bench "3"
-                        (whnf parmergeSort3 three),
+                        (whnf parMergeSort three),
                         bench "10"
-                        (whnf parmergeSort3 ten),
+                        (whnf parMergeSort ten),
                         bench "100"
-                        (whnf parmergeSort3 hundred),
+                        (whnf parMergeSort hundred),
                         bench "1000"
-                        (whnf parmergeSort3 thousand),
+                        (whnf parMergeSort thousand),
                         bench "10000"
-                        (whnf parmergeSort3 tenthousand)
+                        (whnf parMergeSort tenthousand),
+                        bench "100000"
+                        (whnf parMergeSort hunthousand),
+                        bench "1000000"
+                        (whnf parMergeSort million)
                       ]
                     ]

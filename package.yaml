@@ -37,10 +37,8 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    - -eventlog
     dependencies:
     - proj1
-    - random
 
   run-tests:
     main:               Spec.hs
@@ -55,6 +53,8 @@ executables:
     - hspec == 2.*
     - random
     - sort
+    - time
+    - deepseq
 
   run-benches:
     main:               Benchmarks.hs
@@ -84,6 +84,8 @@ tests:
     - random
     - sort
     - parallel
+    - time
+    - deepseq
 
 benchmarks:
   benchmarks:
